@@ -1,0 +1,54 @@
+.timer {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.timer.low-time {
+  background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.time-display {
+  font-size: 72px;
+  font-weight: bold;
+  color: #667eea;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+}
+
+.timer.low-time .time-display {
+  color: white;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.timer-label {
+  color: #888;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.timer.low-time .timer-label {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 768px) {
+  .time-display {
+    font-size: 48px;
+  }
+}
+

@@ -1,0 +1,82 @@
+.lobby-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.lobby-container {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+}
+
+.lobby-container h1 {
+  font-size: 48px;
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: #888;
+  margin-bottom: 40px;
+  font-size: 16px;
+}
+
+.mode-select,
+.mode-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.name-input,
+.room-code-input {
+  padding: 14px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  transition: border-color 0.3s;
+}
+
+.name-input:focus,
+.room-code-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.room-code-input {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
+  letter-spacing: 8px;
+  text-align: center;
+}
+
+.mode-panel h2 {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.mode-panel p {
+  color: #888;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 600px) {
+  .lobby-container {
+    padding: 30px 20px;
+  }
+
+  .lobby-container h1 {
+    font-size: 36px;
+  }
+}
+
