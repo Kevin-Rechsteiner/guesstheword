@@ -10,15 +10,17 @@ const useWebSocket = (url = null) => {
 
   const connectWebSocket = useCallback(() => {
     try {
-      // Dynamische WebSocket URL für Railway
+      // Dynamische WebSocket URL
+      // Priority: explicit hook param -> VITE_WS_URL -> protocol-based default
+      const envWsUrl = import.meta.env?.VITE_WS_URL;
       let wsUrl;
       if (url) {
         wsUrl = url;
+      } else if (envWsUrl) {
+        wsUrl = envWsUrl;
       } else if (window.location.protocol === 'https:') {
-        // Production (Railway) - verwende wss und gleichen Host
         wsUrl = `wss://${window.location.host}`;
       } else {
-        // Entwicklung - verwende ws und localhost:3001
         wsUrl = `ws://localhost:3001`;
       }
 

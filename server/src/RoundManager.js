@@ -5,6 +5,7 @@
 class RoundManager {
   constructor(roundNumber, word, hints, duration, onHintRevealed = null) {
     this.roundNumber = roundNumber;
+    this.originalWord = word;
     this.word = word.toLowerCase();
     this.hints = hints; // Array of 4 hints
     this.duration = duration; // 60 seconds
@@ -65,6 +66,10 @@ class RoundManager {
 
   getRevealedHints() {
     return this.revealedHints;
+  }
+
+  getOriginalWord() {
+    return this.originalWord;
   }
 
   getTimeRemaining() {

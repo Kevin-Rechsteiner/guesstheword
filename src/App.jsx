@@ -12,6 +12,17 @@ function App() {
   const [isHost, setIsHost] = useState(false);
   const [room, setRoom] = useState(null);
   const [incorrectGuessMessage, setIncorrectGuessMessage] = useState('');
+  const [inviteRoomCode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('room');
+    return code ? code.toUpperCase() : '';
+  });
+  const [invitePlayerName] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    const rawName = params.get('name');
+    return rawName ? decodeURIComponent(rawName).slice(0, 20) : '';
+  });
+  const [autoJoinTriggered, setAutoJoinTriggered] = useState(false);
   const { ws, connected, sendMessage } = useWebSocket();
 
   // Handle WebSocket messages
@@ -34,7 +45,8 @@ function App() {
             hostId: payload.playerId,
             gameStarted: false,
             currentRound: 0,
-            totalRounds: 3,
+            totalRounds: 5,
+            lastWord: null,
             players: [{
               id: payload.playerId,
               name: payload.playerName,
@@ -92,11 +104,8 @@ function App() {
 
         case 'ROUND_END':
           setRoom(payload.room);
-          // Show round end screen briefly before next round
-          setTimeout(() => {
-            // Waiting for host to start next round
-            setScreen('waiting');
-          }, 2000);
+          // Jump directly to waiting screen; solution shown there
+          setScreen('waiting');
           break;
 
         case 'GAME_OVER':
@@ -153,6 +162,29 @@ function App() {
     });
   };
 
+  const handleReturnToLobby = () => {
+    setRoomId(null);
+    setPlayerId(null);
+    setPlayerName('');
+    setIsHost(false);
+    setRoom(null);
+    setScreen('lobby');
+  };
+
+  // Auto-join if invite link includes both room and name
+  useEffect(() => {
+    if (
+      connected &&
+      inviteRoomCode &&
+      invitePlayerName &&
+      !autoJoinTriggered &&
+      !roomId
+    ) {
+      handleJoinRoom(invitePlayerName, inviteRoomCode);
+      setAutoJoinTriggered(true);
+    }
+  }, [connected, inviteRoomCode, invitePlayerName, autoJoinTriggered, roomId]);
+
   return (
     <div className="App">
       {!connected ? (
@@ -161,7 +193,12 @@ function App() {
           <h1>Verbindung wird hergestellt...</h1>
         </div>
       ) : screen === 'lobby' ? (
-        <LobbyScreen onCreateRoom={handleCreateRoom} onJoinRoom={handleJoinRoom} />
+        <LobbyScreen
+          onCreateRoom={handleCreateRoom}
+          onJoinRoom={handleJoinRoom}
+          initialRoomCode={inviteRoomCode}
+          initialPlayerName={invitePlayerName}
+        />
       ) : screen === 'waiting' ? (
         <WaitingScreen
           roomId={roomId}
@@ -169,6 +206,7 @@ function App() {
           isHost={isHost}
           onStartGame={handleStartGame}
           onNextRound={handleNextRound}
+          onReturnToLobby={handleReturnToLobby}
         />
       ) : screen === 'game' ? (
         <GameScreen

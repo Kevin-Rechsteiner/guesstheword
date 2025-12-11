@@ -1,21 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/WaitingScreen.css';
 
-function WaitingScreen({ roomId, room, isHost, onStartGame, onNextRound }) {
+function WaitingScreen({
+  roomId,
+  room,
+  isHost,
+  onStartGame,
+  onNextRound,
+  onReturnToLobby
+}) {
+  const [copyStatus, setCopyStatus] = useState('');
+
   if (!room) {
     return <div className="waiting-screen">Laden...</div>;
   }
 
   const isRoundComplete = room.currentRound > 0 && room.players.every((p) => p.guessed);
   const isGameOver = room.currentRound >= room.totalRounds;
+  const inviteLink = `${window.location.origin}/?room=${roomId}`;
+
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(inviteLink);
+      setCopyStatus('Link kopiert!');
+    } catch (err) {
+      console.error('Clipboard copy failed', err);
+      setCopyStatus('Konnte nicht kopieren');
+    } finally {
+      setTimeout(() => setCopyStatus(''), 2500);
+    }
+  };
 
   return (
     <div className="waiting-screen">
       <div className="waiting-container">
         <h1>🎮 Word Guesser</h1>
-        <p className="room-code">Raum-Code: <strong>{roomId}</strong></p>
+        <div className="room-code">
+          <span>Raum-Code: <strong>{roomId}</strong></span>
+          <div className="share-row">
+            <div className="share-link">{inviteLink}</div>
+            <button className="btn btn-secondary" onClick={handleCopyLink}>
+              Link kopieren
+            </button>
+          </div>
+          {copyStatus && <p className="copy-status">{copyStatus}</p>}
+        </div>
 
         <div className="game-info">
+          {room.lastWord && !room.gameStarted && (
+            <div className="info-section solution">
+              <h3>Richtiges Wort</h3>
+              <p className="solution-word">{room.lastWord}</p>
+            </div>
+          )}
           <div className="info-section">
             <h3>Spieler ({room.players.length})</h3>
             <ul className="player-list">
@@ -67,9 +104,22 @@ function WaitingScreen({ roomId, room, isHost, onStartGame, onNextRound }) {
         )}
 
         {isHost && isGameOver && (
-          <button className="btn btn-start" onClick={() => window.location.reload()}>
-            Neue Runde
-          </button>
+          <div className="end-actions">
+            <button className="btn btn-start" onClick={() => window.location.reload()}>
+              Neue Runde
+            </button>
+            <button className="btn btn-secondary" onClick={onReturnToLobby}>
+              Zurück zur Lobby
+            </button>
+          </div>
+        )}
+
+        {!isHost && isGameOver && (
+          <div className="end-actions">
+            <button className="btn btn-secondary" onClick={onReturnToLobby}>
+              Zurück zur Lobby
+            </button>
+          </div>
         )}
       </div>
     </div>

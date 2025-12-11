@@ -28,6 +28,9 @@
   color: #888;
   margin-bottom: 30px;
   font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .room-code strong {
@@ -35,6 +38,29 @@
   color: #667eea;
   font-family: monospace;
   letter-spacing: 2px;
+}
+
+.share-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.share-link {
+  background: #f8f9ff;
+  border: 1px solid #d8e2ff;
+  color: #4454aa;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.copy-status {
+  color: #4454aa;
+  font-size: 14px;
 }
 
 .game-info {
@@ -52,6 +78,17 @@
   color: #667eea;
   margin-bottom: 15px;
   font-size: 18px;
+}
+
+.solution {
+  background: #fff8e5;
+  border: 1px solid #ffe3a3;
+}
+
+.solution-word {
+  font-size: 20px;
+  font-weight: 700;
+  color: #cc7a00;
 }
 
 .player-list {
@@ -113,6 +150,14 @@
 .final-scores li:nth-child(3) {
   background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%);
   color: white;
+}
+
+.end-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+  margin-top: 10px;
 }
 
 @media (max-width: 600px) {

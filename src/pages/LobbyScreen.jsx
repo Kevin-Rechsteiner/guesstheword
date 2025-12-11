@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/LobbyScreen.css';
 
-function LobbyScreen({ onCreateRoom, onJoinRoom }) {
-  const [playerName, setPlayerName] = useState('');
+function LobbyScreen({
+  onCreateRoom,
+  onJoinRoom,
+  initialRoomCode = '',
+  initialPlayerName = ''
+}) {
+  const [playerName, setPlayerName] = useState(initialPlayerName);
   const [mode, setMode] = useState('choose'); // choose, create, join
   const [roomCode, setRoomCode] = useState('');
+
+  useEffect(() => {
+    if (initialRoomCode) {
+      setMode('join');
+      setRoomCode(initialRoomCode.toUpperCase());
+    }
+  }, [initialRoomCode]);
+
+  useEffect(() => {
+    if (initialPlayerName) {
+      setPlayerName(initialPlayerName);
+    }
+  }, [initialPlayerName]);
 
   const handleCreateRoom = () => {
     if (!playerName.trim()) {
@@ -67,6 +85,11 @@ function LobbyScreen({ onCreateRoom, onJoinRoom }) {
         {mode === 'join' && (
           <div className="mode-panel">
             <h2>Runde beitreten</h2>
+            {initialRoomCode && (
+              <p className="info-banner">
+                Du öffnest einen Einladungslink. Raum-Code vorausgefüllt.
+              </p>
+            )}
             <input
               type="text"
               placeholder="Raum-Code eingeben"

@@ -70,6 +70,16 @@
   margin-bottom: 20px;
 }
 
+.info-banner {
+  background: #f0f4ff;
+  color: #4454aa;
+  border: 1px solid #d8e2ff;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  text-align: left;
+}
+
 @media (max-width: 600px) {
   .lobby-container {
     padding: 30px 20px;

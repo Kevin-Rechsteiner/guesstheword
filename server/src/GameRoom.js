@@ -18,6 +18,8 @@ class GameRoom {
     this.lastActivityTime = Date.now();
     this.MAX_PLAYERS = 8;
     this.broadcastFunc = broadcastFunc; // Function to broadcast messages
+    this.lastWord = null; // Revealed solution after round end
+    this.roundTimer = null; // Timer to auto-end rounds
 
     // Add host as first player
     this.players.set(hostId, {
@@ -80,6 +82,7 @@ class GameRoom {
 
     this.currentRound++;
     this.resetRoundState();
+    this.lastWord = null; // Clear previous solution for new round
 
     // Select random word and create round manager
     const wordData = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
@@ -104,6 +107,24 @@ class GameRoom {
       ROUND_DURATION,
       onHintRevealed
     );
+
+    // Clear any previous timer and set a new one for automatic round end
+    if (this.roundTimer) {
+      clearTimeout(this.roundTimer);
+    }
+    this.roundTimer = setTimeout(() => {
+      // If round already ended (e.g., all guessed), skip
+      if (!this.roundManager) return;
+      this.endCurrentRound();
+      if (this.broadcastFunc) {
+        this.broadcastFunc({
+          type: 'ROUND_END',
+          payload: {
+            room: this.getPublicState()
+          }
+        });
+      }
+    }, ROUND_DURATION * 1000);
 
     this.lastActivityTime = Date.now();
 
@@ -179,7 +200,13 @@ class GameRoom {
 
   endCurrentRound() {
     if (this.roundManager) {
+      this.lastWord = this.roundManager.getOriginalWord();
       this.roundManager.stop();
+      this.roundManager = null;
+    }
+    if (this.roundTimer) {
+      clearTimeout(this.roundTimer);
+      this.roundTimer = null;
     }
     this.lastActivityTime = Date.now();
   }
@@ -211,6 +238,7 @@ class GameRoom {
       gameStarted: this.gameStarted,
       currentRound: this.currentRound,
       totalRounds: this.totalRounds,
+      lastWord: this.lastWord,
       players: Array.from(this.players.values()).map((p) => ({
         id: p.id,
         name: p.name,
