@@ -45,7 +45,7 @@ function App() {
             hostId: payload.playerId,
             gameStarted: false,
             currentRound: 0,
-            totalRounds: 5,
+            totalRounds: 10,
             lastWord: null,
             players: [{
               id: payload.playerId,

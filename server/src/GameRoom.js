@@ -1,6 +1,6 @@
 import RoundManager from './RoundManager.js';
 import { WORD_LIST } from './utils/wordList.js';
-import { TOTAL_ROUNDS, ROUND_DURATION } from './utils/config.js';
+import { TOTAL_ROUNDS, ROUND_DURATION, MAX_PLAYERS } from './utils/config.js';
 
 /**
  * GameRoom manages a single game session
@@ -16,7 +16,7 @@ class GameRoom {
     this.totalRounds = TOTAL_ROUNDS;
     this.roundManager = null;
     this.lastActivityTime = Date.now();
-    this.MAX_PLAYERS = 8;
+    this.MAX_PLAYERS = MAX_PLAYERS;
     this.broadcastFunc = broadcastFunc; // Function to broadcast messages
     this.lastWord = null; // Revealed solution after round end
     this.roundTimer = null; // Timer to auto-end rounds
