@@ -4,15 +4,15 @@ Ein React + WebSocket multiplayer Wort-Ratespiel mit Node.js Backend. Spieler tr
 
 ## Features
 
-✅ **Real-time WebSocket Communication** - Echtzeit-Multiplayer-Gameplay
-✅ **Lobby System** - Räume erstellen/beitreten mit eindeutigen Codes
-✅ **Host Controls** - Der Host steuert Spielstart und Rundenablauf
-✅ **Progressive Hints** - 4 Hinweise alle 15 Sekunden revealed (60s Round)
-✅ **Dynamic Scoring** - 4/3/2/1 Punkte je nach Hint-Level
-✅ **Live Scoreboard** - Echtzeit-Scores mit Ranking
-✅ **Multi-Round Gameplay** - 3 Runden pro Spiel (konfigurierbar)
-✅ **Responsive UI** - Mobile-freundliche Oberfläche
-✅ **Production Ready** - Modularer Code, Error Handling, Config Management
+**Real-time WebSocket Communication** - Echtzeit-Multiplayer-Gameplay
+**Lobby System** - Räume erstellen/beitreten mit eindeutigen Codes
+**Host Controls** - Der Host steuert Spielstart und Rundenablauf
+**Progressive Hints** - 4 Hinweise alle 15 Sekunden revealed (60s Round)
+**Dynamic Scoring** - 4/3/2/1 Punkte je nach Hint-Level
+**Live Scoreboard** - Echtzeit-Scores mit Ranking
+**Multi-Round Gameplay** - 3 Runden pro Spiel (konfigurierbar)
+**Responsive UI** - Mobile-freundliche Oberfläche
+**Production Ready** - Modularer Code, Error Handling, Config Management
 
 ## Architecture
 
@@ -115,9 +115,9 @@ Host: "Nächste Runde" Button
 ### 5. **Spiel-Ende**
 ```
 Nach 3 Runden (konfigurierbar):
-  ➜ Finale Scores angezeigt
-  ➜ Gewinner 🥇🥈🥉
-  ➜ "Neue Runde" führt zurück zu Lobby
+  Finale Scores angezeigt
+  Gewinner
+  "Neue Runde" führt zurück zu Lobby
 ```
 
 ## WebSocket Message Format
@@ -387,17 +387,16 @@ CMD ["npm", "start"]
 ```
 
 ## Erweiterungsideen
-
-- [ ] **Kategorien** - Wort-Kategorien (Animals, Sports, etc.)
-- [ ] **Difficulty Levels** - Easy/Medium/Hard Hints
-- [ ] **Statistics** - Win rates, Average scores
-- [ ] **Chat** - In-Game Messaging
-- [ ] **Custom Words** - Host kann eigene Wörter eingeben
-- [ ] **Time Modes** - 30s / 90s Runden
-- [ ] **Achievements** - Badges für Schnelligkeit
-- [ ] **Leaderboards** - Globale Top Scores
-- [ ] **Audio Hints** - Voice hints option
-- [ ] **Social Sharing** - Scores teilen
+**Kategorien** - Wort-Kategorien (Animals, Sports, etc.)
+**Difficulty Levels** - Easy/Medium/Hard Hints
+**Statistics** - Win rates, Average scores
+**Chat** - In-Game Messaging
+**Custom Words** - Host kann eigene Wörter eingeben
+**Time Modes** - 30s / 90s Runden
+**Achievements** - Badges für Schnelligkeit
+**Leaderboards** - Globale Top Scores
+**Audio Hints** - Voice hints option
+**Social Sharing** - Scores teilen
 
 ## License
 
@@ -413,5 +412,5 @@ Bei Fragen oder Bugs:
 
 ---
 
-**Viel Spaß beim Spielen! 🎮**
+**Viel Spaß beim Spielen!**
 
